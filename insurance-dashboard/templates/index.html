@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Insurance Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papV0b6Y5Qqv..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="wrap">
+        <div class="card">
+            <div class="header">
+                <div class="logo">ID</div>
+                <button id="themeToggleBtn" class="theme-toggle" aria-label="Toggle theme"> </button>
+                <div>
+                    <h1>Insurance Cost Predictor</h1>
+                    <p class="lead">Enter a few details to get a quick estimate — sleek, simple, and classy.</p>
+                    {% if username %}
+                    <p class="small" style="margin-top:10px;color:var(--muted-2);">Logged in as <strong>{{ username }}</strong></p>
+                    {% endif %}
+                </div>
+                <div class="sparkle"><i class="fa-solid fa-gem"></i></div>
+                {% if username %}
+                <a href="{{ url_for('logout') }}" class="btn" style="background:linear-gradient(90deg,#ef4444,#d43f3f);color:#fff;position:absolute;right:100px;top:16px;">Logout</a>
+                {% endif %}
+            </div>
+
+            <div class="grid">
+                <div class="form-col">
+                    <form id="prediction-form" action="/predict" method="post">
+                        <div style="margin-bottom:12px">
+                            <label for="age">Age</label>
+                            <input id="age" class="input" type="number" name="age" placeholder="e.g. 29" required>
+                        </div>
+
+                        <div style="margin-bottom:12px">
+                            <label for="sex">Sex</label>
+                            <select id="sex" name="sex" class="input">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom:12px">
+                            <label for="bmi">BMI</label>
+                            <input id="bmi" class="input" type="number" step="0.1" name="bmi" placeholder="e.g. 27.3" required>
+                        </div>
+
+                        <div style="margin-bottom:12px">
+                            <label for="smoker">Smoker</label>
+                            <select id="smoker" name="smoker" class="input">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom:12px">
+                            <label for="region">Region</label>
+                            <select id="region" name="region" class="input">
+                                <option value="southwest">Southwest</option>
+                                <option value="southeast">Southeast</option>
+                                <option value="northwest">Northwest</option>
+                                <option value="northeast">Northeast</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom:18px">
+                            <label for="children">Children</label>
+                            <input id="children" class="input" type="number" name="children" placeholder="Number of children" required>
+                        </div>
+
+                        <div class="row">
+                            <button class="btn" type="submit"><i class="fa-solid fa-magic"></i> Predict</button>
+                            <button type="button" onclick="document.getElementById('prediction-form').reset()" class="btn" style="background:linear-gradient(90deg,#f59e0b,#ef4444);color:#fff"><i class="fa-solid fa-broom"></i> Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="result-col">
+                    <div class="result" id="resultBox">
+                        {% if prediction_text %}
+                        <div style="text-align:center">
+                            <div class="small">Estimated annual cost</div>
+                            <div class="prediction-text">{{ prediction_text }}</div>
+                            <div class="small" style="margin-top:8px">This estimate is based on a statistical model — for demo purposes only.</div>
+                        </div>
+                        {% else %}
+                        <div style="text-align:center;color:var(--muted)">
+                            <i class="fa-regular fa-chart-line" style="font-size:34px;margin-bottom:8px"></i>
+                            <div class="small">No prediction yet — enter values and press Predict.</div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <footer>Made with <span style="color:#ff6b6b">♥</span> — classy &amp; fun UI</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // If there's a prediction, give a subtle confetti burst
+        document.addEventListener('DOMContentLoaded',()=>{
+            const hasPrediction = {{ 'true' if prediction_text else 'false' }};
+            if(hasPrediction){
+                confetti({particleCount:60,spread:70,origin:{y:0.2}})
+                const box = document.getElementById('resultBox');
+                box.animate([{transform:'scale(0.98)'},{transform:'scale(1)'}],{duration:500, easing:'cubic-bezier(.2,.8,.2,1)'});
+            }
+        })
+    </script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+</html>

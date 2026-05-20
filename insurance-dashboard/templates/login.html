@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Insurance Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="wrap">
+        <div class="card" style="max-width:440px;">
+            <div class="header">
+                <div class="logo">ID</div>
+                <button id="themeToggleBtn" class="theme-toggle" aria-label="Toggle theme"> </button>
+                <div>
+                    <h1>Welcome Back</h1>
+                    <p class="lead">Login to access the insurance prediction dashboard.</p>
+                </div>
+                <div class="sparkle"><i class="fa-solid fa-shield-alt"></i></div>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div style="margin:16px 0;">
+                {% for category, message in messages %}
+                <div class="small" style="color: {{ 'var(--accent)' if category == 'success' else '#f97373' }}; padding:10px 12px; background: rgba(255,255,255,0.08); border-radius:10px; margin-bottom:8px;">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('login') }}" method="post">
+                <div style="margin-bottom:14px">
+                    <label for="username">Username</label>
+                    <input id="username" class="input" type="text" name="username" placeholder="Your username" required>
+                </div>
+                <div style="margin-bottom:18px">
+                    <label for="password">Password</label>
+                    <input id="password" class="input" type="password" name="password" placeholder="Your password" required>
+                </div>
+                <button class="btn" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+            </form>
+
+            <div style="margin-top:18px;text-align:center;color:var(--muted-2);">
+                <span>Don't have an account? </span><a href="{{ url_for('signup') }}" style="color:var(--accent);font-weight:600;">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+</html>
