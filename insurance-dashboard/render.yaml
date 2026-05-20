@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: insurance-dashboard
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: FLASK_SECRET_KEY
+        value: "replace-this-with-a-secret"
+    pythonVersion: "3.11"
