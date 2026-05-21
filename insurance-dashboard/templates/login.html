@@ -4,18 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login - Insurance Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="wrap">
-        <div class="card" style="max-width:440px;">
+        <div class="card auth-card" style="max-width:440px;">
             <div class="header">
                 <div class="logo">ID</div>
-                <button id="themeToggleBtn" class="theme-toggle" aria-label="Toggle theme"> </button>
                 <div>
-                    <h1>Welcome Back</h1>
+                    <h1 class="auth-title">Insurance Premium Predictor</h1>
                     <p class="lead">Login to access the insurance prediction dashboard.</p>
                 </div>
                 <div class="sparkle"><i class="fa-solid fa-shield-alt"></i></div>
@@ -48,7 +47,5 @@
             </div>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
 </body>
 </html>

@@ -20,8 +20,8 @@
   function updateButton(theme){
     const btn = document.getElementById(btnId);
     if(!btn) return;
-    btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
-    btn.title = theme === 'light' ? 'Switch to dark' : 'Switch to light';
+    btn.textContent = 'Theme';
+    btn.title = 'Toggle theme';
   }
 
   document.addEventListener('DOMContentLoaded',()=>{
